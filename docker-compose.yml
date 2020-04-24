@@ -1,0 +1,13 @@
+version: '3'
+services:
+  node:
+    build:
+      context: ./docker_assets/node
+    ports:
+      - '3000:3000'
+    volumes:
+      - ./client:/var/www/client
+    environment:
+      - NODE_ENV=development
+    tty: true
+    container_name: testapp_client
