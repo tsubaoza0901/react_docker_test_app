@@ -30,7 +30,7 @@ class UsersNew extends React.Component {
     this.props.history.push('/');
   }
   render() {
-    const { handleSubmit } = this.props;
+    const { handleSubmit, pristine, submitting, invalid } = this.props;
     return (
       <form onSubmit={handleSubmit(this.onSubmit)}>
         <div>
@@ -42,7 +42,11 @@ class UsersNew extends React.Component {
           />
         </div>
         <div>
-          <input type="submit" value="Submit" disabled={false} />
+          <input
+            type="submit"
+            value="Submit"
+            disabled={pristine || submitting || invalid}
+          />
           <Link to="/">Cancel</Link>
         </div>
       </form>
