@@ -14,7 +14,9 @@ class UsersIndex extends React.Component {
     return _.map(this.props.users, (user, index) => (
       <tr key={index}>
         <td>{user.id}</td>
-        <td>{user.UserName}</td>
+        <td>
+          <Link to={`/users/${user.id}`}>{user.UserName}</Link>
+        </td>
       </tr>
     ));
   }

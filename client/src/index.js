@@ -9,6 +9,7 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import reducer from './reducers';
 import UsersIndex from './components/users_index';
 import UsersNew from './components/users_new';
+import UsersShow from './components/users_show';
 // import './index.css';
 // import App from './App';
 import * as serviceWorker from './serviceWorker';
@@ -24,7 +25,9 @@ ReactDOM.render(
   <Provider store={store}>
     <BrowserRouter>
       <Switch>
-        <Route exact path="/users/new" component={UsersNew} />
+        <Route path="/users/new" component={UsersNew} />
+        <Route path="/users/:id" component={UsersShow} />
+        <Route exact path="users" component={UsersIndex} />
         <Route exact path="/" component={UsersIndex} />
       </Switch>
     </BrowserRouter>

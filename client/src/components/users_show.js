@@ -3,12 +3,17 @@ import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
 import { Link } from 'react-router-dom';
 
-import { postUser } from '../actions';
+import { getUser, deleteUser, putUser } from '../actions';
 
-class UsersNew extends React.Component {
+class UsersShow extends React.Component {
   constructor(props) {
     super(props);
     this.onSubmit = this.onSubmit.bind(this);
+    this.onDeleteClick = this.onDeleteClick.bind(this);
+  }
+  componentDidMount() {
+    const { id } = this.props.match.params;
+    if (id) this.props.getUser(id);
   }
   renderField(field) {
     const {
@@ -25,8 +30,13 @@ class UsersNew extends React.Component {
       </div>
     );
   }
+  async onDeleteClick() {
+    const { id } = this.props.match.params;
+    await this.props.deleteUser(id);
+    this.props.history.push('/');
+  }
   async onSubmit(values) {
-    await this.props.postUser(values);
+    await this.props.putUser(values);
     this.props.history.push('/');
   }
   render() {
@@ -36,7 +46,7 @@ class UsersNew extends React.Component {
         <div>
           <Field
             label="UserName"
-            name="userName"
+            name="UserName"
             type="text"
             component={this.renderField}
           />
@@ -48,6 +58,9 @@ class UsersNew extends React.Component {
             disabled={pristine || submitting || invalid}
           />
           <Link to="/">Cancel</Link>
+          <Link to="/" onClick={this.onDeleteClick}>
+            Delete
+          </Link>
         </div>
       </form>
     );
@@ -57,13 +70,22 @@ class UsersNew extends React.Component {
 const validate = (values) => {
   const errors = {};
 
-  if (!values.userName) errors.userName = 'Enter a UserName, please.';
+  if (!values.UserName) errors.UserName = 'Enter a UserName, please.';
   return errors;
 };
 
-const mapDispatchToProps = { postUser };
+const mapStateToProps = (state, ownProps) => {
+  const user = state.users[ownProps.match.params.id];
+  return { initialValues: user, user };
+};
+
+const mapDispatchToProps = { deleteUser, getUser, putUser };
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
-)(reduxForm({ validate, form: 'userNewForm' })(UsersNew));
+)(
+  reduxForm({ validate, form: 'userShowForm', enableReinitialize: true })(
+    UsersShow
+  )
+);
