@@ -44,16 +44,5 @@ services:
       - db
     networks:
       - testnet
-  nginx:
-    image: nginx:latest
-    depends_on:
-      - golang
-    container_name: testapp_webserver
-    ports:
-      - 80:80
-    environment:
-      - TZ=Asia/Tokyo
-    volumes:
-      - ./docker_assets/nginx/nginx.conf:/etc/nginx/nginx.conf
 networks:
   testnet:
