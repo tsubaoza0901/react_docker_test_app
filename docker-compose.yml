@@ -31,6 +31,24 @@ services:
     command: mysqld --character-set-server=utf8 --collation-server=utf8_unicode_ci --skip-character-set-client-handshake
     networks:
       - testnet
+  # testdb:
+  #   build:
+  #     context: ./docker_assets/db_mysql
+  #   environment:
+  #     MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+  #     MYSQL_DATABASE: ${MYSQL_DATABASE}
+  #     MYSQL_USER: ${MYSQL_USER}
+  #     MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+  #   container_name: testapp_testdb
+  #   ports:
+  #     - '3306:3306'
+  #   tty: true
+  #   volumes:
+  #     - ./docker_assets/db_mysql/mysql_init:/docker-entrypoint-initdb.d
+  #     - ./docker_assets/db_mysql/mysql_data:/var/lib/mysql
+  #   command: mysqld --character-set-server=utf8 --collation-server=utf8_unicode_ci --skip-character-set-client-handshake
+  #   networks:
+  #     - testnet
   golang:
     build:
       context: ./docker_assets/go
