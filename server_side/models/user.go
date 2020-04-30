@@ -2,7 +2,9 @@ package models
 
 type User struct {
 	Model
-	UserName string `gorm:"" json:""userName`
+	UserName string `gorm:"" json:"userName"`
+	LoginName string `gorm:"" json:"loginName"`
+	LoginPassword string `gorm:"" json:"loginPassword"`
 }
 
 func CreateUser(user User) (UserID int64, err error) {
@@ -12,6 +14,12 @@ func CreateUser(user User) (UserID int64, err error) {
 
 func GetUser(UserID int64) (user User, err error) {
 	err = db.First(&user, UserID).Error
+	return user, err
+}
+
+func GetUserByLoginName(LoginName string) (user *User, err error) {
+	user = &User{}
+	err = db.Set("gorm:auto_preload", true).First(&user, User{LoginName: LoginName}).Error
 	return user, err
 }
 

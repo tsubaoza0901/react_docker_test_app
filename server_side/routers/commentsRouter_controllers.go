@@ -7,6 +7,24 @@ import (
 
 func init() {
 
+    beego.GlobalControllerRouter["app/server_side/controllers:LoginController"] = append(beego.GlobalControllerRouter["app/server_side/controllers:LoginController"],
+        beego.ControllerComments{
+            Method: "Post",
+            Router: `/`,
+            AllowHTTPMethods: []string{"post"},
+            MethodParams: param.Make(),
+            Filters: nil,
+            Params: nil})
+
+    beego.GlobalControllerRouter["app/server_side/controllers:LoginController"] = append(beego.GlobalControllerRouter["app/server_side/controllers:LoginController"],
+        beego.ControllerComments{
+            Method: "GetOut",
+            Router: `/logout`,
+            AllowHTTPMethods: []string{"get"},
+            MethodParams: param.Make(),
+            Filters: nil,
+            Params: nil})
+
     beego.GlobalControllerRouter["app/server_side/controllers:UserController"] = append(beego.GlobalControllerRouter["app/server_side/controllers:UserController"],
         beego.ControllerComments{
             Method: "Post",

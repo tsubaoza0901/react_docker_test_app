@@ -5,13 +5,13 @@ import (
 
 	"app/server_side/models"
 
-	"github.com/astaxie/beego"
+	// "github.com/astaxie/beego"
 )
 
 //UserController Operations
 type UserController struct {
-	beego.Controller
-	// RequiredLoginController
+	// beego.Controller
+	RequiredLoginController
 }
 
 // URLMapping ...

@@ -4,15 +4,16 @@ import (
 	_ "app/server_side/routers"
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/plugins/cors"
+	"github.com/astaxie/beego/session"
 )
 
 func main() {
-	// sessionconf := &session.ManagerConfig{
-	// 	CookieName: "beegosessionId",
-	// 	Gclifetime: 3600,
-	// }
-	// beego.GlobalSessions, _ = session.NewManager("memory", sessionconf)
-	// go beego.GlobalSessions.GC()
+	sessionconf := &session.ManagerConfig{
+		CookieName: "beegosessionId",
+		Gclifetime: 3600,
+	}
+	beego.GlobalSessions, _ = session.NewManager("memory", sessionconf)
+	go beego.GlobalSessions.GC()
 
 	if beego.BConfig.RunMode == "dev" {
 		beego.BConfig.WebConfig.DirectoryIndex = true
