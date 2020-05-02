@@ -4,13 +4,11 @@ import (
 	"encoding/json"
 
 	"app/server_side/models"
-
 	// "github.com/astaxie/beego"
 )
 
 //UserController Operations
 type UserController struct {
-	// beego.Controller
 	RequiredLoginController
 }
 
@@ -31,7 +29,7 @@ func (c *UserController) URLMapping() {
 // @Failure 403 body is empty
 // @router / [post]
 func (c *UserController) Post() {
-	// defer c.HandlePanic()
+	defer c.HandlePanic()
 	var user models.User
 	err := json.Unmarshal(c.Ctx.Input.RequestBody, &user)
 	if err != nil {
@@ -57,7 +55,7 @@ func (c *UserController) Post() {
 // @Success 200 {object} models.User
 // @router / [get]
 func (c *UserController) GetAll() {
-	// defer c.HandlePanic()
+	defer c.HandlePanic()
 	var limit, offset int64
 	c.Ctx.Input.Bind(&limit, "limit")
 	c.Ctx.Input.Bind(&offset, "offset")
@@ -80,7 +78,7 @@ func (c *UserController) GetAll() {
 // @Failure 403 :UserID is empty
 // @router /:UserID [get]
 func (c *UserController) Get() {
-	// defer c.HandlePanic()
+	defer c.HandlePanic()
 	userID, err := c.GetInt64(":UserID")
 	if err != nil {
 		c.Data["json"] = err.Error()
@@ -106,7 +104,7 @@ func (c *UserController) Get() {
 // @Failure 403 :UserID is not int
 // @router /:UserID [put]
 func (c *UserController) Put() {
-	// defer c.HandlePanic()
+	defer c.HandlePanic()
 	userID, err := c.GetInt64(":UserID")
 	if err != nil {
 		c.Data["json"] = err.Error()
@@ -139,7 +137,7 @@ func (c *UserController) Put() {
 // @Failure 403 UserID is empty
 // @router /:UserID [delete]
 func (c *UserController) Delete() {
-	// defer c.HandlePanic()
+	defer c.HandlePanic()
 	userID, err := c.GetInt64(":UserID")
 	if err != nil {
 		c.Data["json"] = err.Error()

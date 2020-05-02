@@ -15,7 +15,7 @@ class UsersIndex extends React.Component {
       <tr key={index}>
         <td>{user.id}</td>
         <td>
-          <Link to={`/users/${user.id}`}>{user.UserName}</Link>
+          <Link to={`/users/${user.id}`}>{user.userName}</Link>
         </td>
       </tr>
     ));

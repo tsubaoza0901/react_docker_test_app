@@ -2,6 +2,7 @@ package main
 
 import (
 	_ "app/server_side/routers"
+
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/plugins/cors"
 	"github.com/astaxie/beego/session"
@@ -21,7 +22,7 @@ func main() {
 	}
 
 	beego.InsertFilter("*", beego.BeforeRouter, cors.Allow(&cors.Options{
-		AllowAllOrigins:  true,
+		AllowAllOrigins: true,
 		// AllowOrigins:     []string{"https://*.foo.com"},
 		AllowMethods:     []string{"GET", "PUT", "POST", "DELETE", "OPTIONS"},
 		AllowHeaders:     []string{"Origin", "Content-Type"}, // Getの場合は"Origin"のみでOK。Postの場合は"Content-Type"も必要
@@ -30,4 +31,3 @@ func main() {
 	}))
 	beego.Run()
 }
-

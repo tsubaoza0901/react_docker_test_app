@@ -36,7 +36,7 @@ class UsersNew extends React.Component {
         <div>
           <Field
             label="UserName"
-            name="userName"
+            name="userName" // jsonデータのキー名
             type="text"
             component={this.renderField}
           />

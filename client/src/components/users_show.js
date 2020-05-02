@@ -46,7 +46,7 @@ class UsersShow extends React.Component {
         <div>
           <Field
             label="UserName"
-            name="UserName"
+            name="userName" // jsonデータのキー名
             type="text"
             component={this.renderField}
           />
@@ -70,7 +70,7 @@ class UsersShow extends React.Component {
 const validate = (values) => {
   const errors = {};
 
-  if (!values.UserName) errors.UserName = 'Enter a UserName, please.';
+  if (!values.userName) errors.userName = 'Enter a UserName, please.';
   return errors;
 };
 

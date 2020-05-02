@@ -14,7 +14,7 @@ import (
 
 //Init ...
 type Init struct {
-	User       []*User       `json:"user"`
+	User []*User `json:"user"`
 }
 
 //BaseDirectory is project directory

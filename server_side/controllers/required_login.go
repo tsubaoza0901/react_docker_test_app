@@ -4,6 +4,7 @@ import (
 	"github.com/astaxie/beego"
 )
 
+// RequiredLoginController ...
 type RequiredLoginController struct {
 	beego.Controller
 	UserID int64
@@ -16,13 +17,13 @@ func (r *RequiredLoginController) Prepare() {
 	userID := session.Get("userID")
 
 	if userID == nil {
-		r.Ctx.ResponseWriter.WriteHeader(401)
+		// r.Ctx.ResponseWriter.WriteHeader(401) // 開発中はコメントアウト
 	} else {
 		r.UserID = userID.(int64)
 	}
 }
 
-// HandlePanic
+// HandlePanic ...
 func (r RequiredLoginController) HandlePanic() {
 	if err := recover(); err != nil {
 		r.Data["json"] = err

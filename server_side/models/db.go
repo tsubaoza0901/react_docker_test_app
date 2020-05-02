@@ -6,8 +6,10 @@ import (
 
 	"github.com/astaxie/beego"
 	"github.com/jinzhu/gorm"
-	_ "github.com/jinzhu/gorm/dialects/mysql"
 	"github.com/natefinch/lumberjack"
+
+	// BrankImportForTes
+	_ "github.com/jinzhu/gorm/dialects/mysql"
 )
 
 var db *gorm.DB
