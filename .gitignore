@@ -110,3 +110,4 @@ docker_assets/db_mysql/mysql_data
 .devcontainer
 
 server_side/server_side
+server_side/lastupdate.tmp
