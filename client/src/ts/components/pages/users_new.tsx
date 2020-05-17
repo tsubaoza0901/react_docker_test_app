@@ -1,23 +1,19 @@
 // ------------------------------
 // TypeScript（型安全未実装）※ material-uiあり
 // ------------------------------
+
 import React from 'react';
 import { connect } from 'react-redux';
 import { Field, reduxForm, InjectedFormProps, FormErrors } from 'redux-form';
 import { Link } from 'react-router-dom';
-// 追加---------------------------
-import RaiseButton from 'material-ui/RaisedButton';
+import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
-// ------------------------------
 
-import { getUser, deleteUser, putUser } from '../actions';
+import { postUser } from '../../actions';
 
 interface Props {
-  match: any;
-  getUser: any;
-  deleteUser: any;
+  postUser: any;
   history: any;
-  putUser: any;
   handleSubmit: any;
   pristine: any;
   submitting: any;
@@ -26,22 +22,18 @@ interface Props {
 
 interface State {}
 
+// LoginFormDataの名称は今後のログイン機能実装にむけた仮設定
 interface LoginFormData {
   userName?: string;
 }
 
-class UsersShow extends React.Component<
+class UsersNew extends React.Component<
   InjectedFormProps<{}, Props> & Props,
   State
 > {
   constructor(props: any) {
     super(props);
     this.onSubmit = this.onSubmit.bind(this);
-    this.onDeleteClick = this.onDeleteClick.bind(this);
-  }
-  componentDidMount() {
-    const { id } = this.props.match.params;
-    if (id) this.props.getUser(id);
   }
   renderField(field: any) {
     const {
@@ -53,7 +45,7 @@ class UsersShow extends React.Component<
 
     return (
       <div>
-        {/* TextFieldへリプレイス */}
+        {/* 元々のinputタグをTextFieldでレプレイス */}
         <TextField
           hintText={label}
           floatingLabelText={label}
@@ -65,17 +57,13 @@ class UsersShow extends React.Component<
       </div>
     );
   }
-  async onDeleteClick() {
-    const { id } = this.props.match.params;
-    await this.props.deleteUser(id);
-    this.props.history.push('/');
-  }
   async onSubmit(values: any) {
-    await this.props.putUser(values);
+    await this.props.postUser(values);
     this.props.history.push('/');
   }
   render() {
     const { handleSubmit, pristine, submitting, invalid } = this.props;
+    // styleの詳細設定
     const style = { margin: 12 };
     return (
       <form onSubmit={handleSubmit(this.onSubmit)}>
@@ -88,22 +76,17 @@ class UsersShow extends React.Component<
           />
         </div>
         <div>
-          {/* RaiseButtonへリプレイス */}
-          <RaiseButton
+          {/* inputタグ（submitボタン）、Linkタグ（Cancelボタン）をRaisedButtonでレプレイス */}
+          <RaisedButton
             label="Submit"
             type="submit"
             style={style}
             disabled={pristine || submitting || invalid}
           />
-          <RaiseButton
+          <RaisedButton
             label="Cancel"
             style={style}
             containerElement={<Link to="/" />}
-          />
-          <RaiseButton
-            label="Delete"
-            style={style}
-            onClick={this.onDeleteClick}
           />
         </div>
       </form>
@@ -118,64 +101,51 @@ const validate = (values: any) => {
   return errors;
 };
 
-const mapStateToProps = (state: any, ownProps: any) => {
-  const user = state.users[ownProps.match.params.id];
-  return { initialValues: user, user };
-};
-
-const mapDispatchToProps = { deleteUser, getUser, putUser };
+const mapDispatchToProps = { postUser };
 
 export default connect(
-  mapStateToProps,
+  null,
   mapDispatchToProps
 )(
-  reduxForm<{}, Props>({
-    validate,
-    form: 'userShowForm',
-    enableReinitialize: true,
-  })(UsersShow)
+  reduxForm<{}, Props>({ validate, form: 'userNewForm' })(UsersNew)
 );
 
 // ------------------------------
 // TypeScript（型安全未実装）※ material-uiなし
 // ------------------------------
+// /*
+// 【note】
+// ・ReduxフォームとReact Reduxの接続
+// https://github.com/CodeMeNatalie/Redux-Forms-with-TypeScript/blob/master/src/components/LoginForm/LoginForm.tsx
+// */
+
 // import React from 'react';
 // import { connect } from 'react-redux';
 // import { Field, reduxForm, InjectedFormProps, FormErrors } from 'redux-form';
 // import { Link } from 'react-router-dom';
 
-// import { getUser, deleteUser, putUser } from '../actions';
+// import { postUser } from '../actions';
 
 // interface Props {
-//   match: any;
-//   getUser: any;
-//   deleteUser: any;
+//   postUser: any;
 //   history: any;
-//   putUser: any;
 //   handleSubmit: any;
 //   pristine: any;
 //   submitting: any;
 //   invalid: any;
 // }
 
-// interface State {}
+// interface State { }
 
+// // LoginFormDataの名称は今後のログイン機能実装にむけた仮設定
 // interface LoginFormData {
 //   userName?: string;
 // }
 
-// class UsersShow extends React.Component<
-//   InjectedFormProps<{}, Props> & Props,
-//   State
-// > {
+// class UsersNew extends React.Component<InjectedFormProps<{}, Props> & Props, State> {
 //   constructor(props: any) {
 //     super(props);
 //     this.onSubmit = this.onSubmit.bind(this);
-//     this.onDeleteClick = this.onDeleteClick.bind(this);
-//   }
-//   componentDidMount() {
-//     const { id } = this.props.match.params;
-//     if (id) this.props.getUser(id);
 //   }
 //   renderField(field: any) {
 //     const {
@@ -192,13 +162,8 @@ export default connect(
 //       </div>
 //     );
 //   }
-//   async onDeleteClick() {
-//     const { id } = this.props.match.params;
-//     await this.props.deleteUser(id);
-//     this.props.history.push('/');
-//   }
 //   async onSubmit(values: any) {
-//     await this.props.putUser(values);
+//     await this.props.postUser(values);
 //     this.props.history.push('/');
 //   }
 //   render() {
@@ -220,9 +185,6 @@ export default connect(
 //             disabled={pristine || submitting || invalid}
 //           />
 //           <Link to="/">Cancel</Link>
-//           <Link to="/" onClick={this.onDeleteClick}>
-//             Delete
-//           </Link>
 //         </div>
 //       </form>
 //     );
@@ -236,20 +198,9 @@ export default connect(
 //   return errors;
 // };
 
-// const mapStateToProps = (state: any, ownProps: any) => {
-//   const user = state.users[ownProps.match.params.id];
-//   return { initialValues: user, user };
-// };
-
-// const mapDispatchToProps = { deleteUser, getUser, putUser };
+// const mapDispatchToProps = { postUser };
 
 // export default connect(
-//   mapStateToProps,
+//   null,
 //   mapDispatchToProps
-// )(
-//   reduxForm<{}, Props>({
-//     validate,
-//     form: 'userShowForm',
-//     enableReinitialize: true,
-//   })(UsersShow)
-// );
+// )(reduxForm<{}, Props>({ validate, form: 'userNewForm' })(UsersNew));

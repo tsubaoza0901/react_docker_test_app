@@ -8,11 +8,12 @@ import (
 	"strconv"
 	"strings"
 	"testing"
+
 	"github.com/astaxie/beego"
 	"github.com/stretchr/testify/assert"
 	"github.com/tidwall/gjson"
 
-	_"app/server_side/routers"
+	_ "app/server_side/routers"
 )
 
 var jsonDirectory = baseDirectory + "/test/test_controllers/test_json/"
@@ -41,7 +42,7 @@ func testGet(t *testing.T, controllerNameByCamelCase string, id int64, expectJSO
 
 // 指定したレコードのGet
 func get(t *testing.T, tableName string, id int64) (response *http.Response) {
-	url := "/api/v1" + tableName + "/" +strconv.Itoa(int(id))
+	url := "/api/v1" + tableName + "/" + strconv.Itoa(int(id))
 	httpRequest := httptest.NewRequest("GET", url, nil)
 	recorder := httptest.NewRecorder()
 
@@ -58,7 +59,7 @@ func compareJSONs(t *testing.T, expectJSON string, actualJSON string, id int64) 
 	testCase = jsonKeysToStringSlice(expectJSON, "", false)
 
 	if id != -1 {
-		assert.Equal(t, strconv.Itoa(int(id)),gjson.Get(actualJSON, "id").String(), "id")
+		assert.Equal(t, strconv.Itoa(int(id)), gjson.Get(actualJSON, "id").String(), "id")
 	}
 
 	for _, path := range testCase {

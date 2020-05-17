@@ -34,9 +34,10 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 // ------------------------------
 
 import reducer from './ts/reducers';
-import UsersIndex from './ts/components/users_index';
-import UsersNew from './ts/components/users_new';
-import UsersShow from './ts/components/users_show';
+import UsersIndex from './ts/components/pages/users_index';
+import UsersNew from './ts/components/pages/users_new';
+import UsersShow from './ts/components/pages/users_show';
+import LoginPage from './ts/components/pages/LoginPage';
 // import './index.css';
 // import App from './App';
 import * as serviceWorker from './serviceWorker';
@@ -45,7 +46,9 @@ const enhancer =
   process.env.NODE_ENV === 'development'
     ? composeWithDevTools(applyMiddleware(thunk))
     : applyMiddleware(thunk);
-const store = createStore(reducer, enhancer);
+
+// componentの型定義で使用できるようexportを追加（5/11）
+export const store = createStore(reducer, enhancer);
 
 ReactDOM.render(
   // MuiThemeProviderコンポーネントでProviderコンポーネントをラップ
@@ -57,6 +60,7 @@ ReactDOM.render(
           <Route path="/users/:id" component={UsersShow} />
           <Route exact path="users" component={UsersIndex} />
           <Route exact path="/" component={UsersIndex} />
+          <Route path="/login" component={LoginPage} />
         </Switch>
       </BrowserRouter>
     </Provider>
@@ -96,6 +100,9 @@ serviceWorker.unregister();
 // const store = createStore(reducer, enhancer);
 
 // ReactDOM.render(
+// 【重要】Providerの目的は2つ
+// 1. Reactコンポーネント内でreact-reduxのconnect()関数を使えるようにすること
+// 2. ラップしたコンポーネントにstore情報を渡すこと
 //   <Provider store={store}>
 //     <BrowserRouter>
 //       <Switch>

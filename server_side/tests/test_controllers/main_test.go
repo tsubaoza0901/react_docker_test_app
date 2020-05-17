@@ -3,21 +3,22 @@ package testcontrollers
 import (
 	// "log"
 	"os"
-	_"strings"
+	_ "strings"
 	"testing"
 
-	_"path/filepath"
 	"app/server_side/models"
-	_"app/server_side/routers"
+	_ "app/server_side/routers"
+	_ "path/filepath"
+
 	"github.com/astaxie/beego"
+
 	// "github.com/astaxie/beego/httplib"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
-	// "github.com/stretchr/testify/assert"
-	// "github.com/tidwall/gjson"
 )
 
 var db *gorm.DB
+
 const baseURL = "http://localhost:8080/api/v1/"
 
 var baseDirectory = models.BaseDirectory
