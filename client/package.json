@@ -8,6 +8,7 @@
     "@testing-library/user-event": "^7.1.2",
     "@types/material-ui": "^0.21.7",
     "@types/node": "^13.13.4",
+    "@types/styled-components": "^5.1.0",
     "axios": "^0.19.2",
     "formik": "^2.1.4",
     "material-ui": "0.20.0",
@@ -20,6 +21,7 @@
     "redux-devtools-extension": "^2.13.8",
     "redux-form": "^8.3.5",
     "redux-thunk": "^2.3.0",
+    "styled-components": "^5.1.0",
     "yup": "^0.28.5"
   },
   "scripts": {
